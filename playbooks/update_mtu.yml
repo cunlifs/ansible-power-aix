@@ -1,8 +1,11 @@
-
-- name: Modify an attribute of a device
-  devices:
-    device: en0
-    state: available
-    attributes:
-      mtu: 900
-      arp: off
+---
+- hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Modify MTU
+      ibm.power_aix.devices:
+        device: en0
+        state: available
+        attributes:
+          mtu: 900
+          arp: off
