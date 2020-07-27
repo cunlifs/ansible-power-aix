@@ -7,4 +7,4 @@
         device: en0
         state: available
         attributes:
-          mtu: 900
+          mtu: 1500
