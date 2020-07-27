@@ -1,0 +1,7 @@
+---
+- hosts: AIX_Dev
+  gather_facts: yes
+  tasks:
+    - name: List interim fix on the system
+      emgr:
+        action: list
