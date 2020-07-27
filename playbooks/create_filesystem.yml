@@ -1,5 +1,5 @@
 ---
-- hosts: AIX_Dev
+- hosts: all
   gather_facts: yes
   tasks:
     - name: Creation of a JFS2 filesystem
