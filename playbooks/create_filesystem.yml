@@ -1,6 +1,8 @@
 ---
 - hosts: all
   gather_facts: yes
+  collections:
+    - ibm.power_aix
   tasks:
     - name: Creation of a JFS2 filesystem
       filesystem:
