@@ -1,0 +1,8 @@
+
+- name: Modify an attribute of a device
+  devices:
+    device: en0
+    state: available
+    attributes:
+      mtu: 900
+      arp: off
