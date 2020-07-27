@@ -3,5 +3,5 @@
   gather_facts: yes
   tasks:
     - name: List interim fix on the system
-      emgr:
+      ibm.power_aix.emgr:
         action: list
