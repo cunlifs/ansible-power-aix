@@ -43,14 +43,14 @@
       ignore_errors: yes
 
     # Add users
-    - name: Create user aixadmin1
+    - name: Create user admin1
       ibm.power_aix.user:
         state: present
-        name: aixadmin1
+        name: admin1
         change_passwd_on_login: True
         password: passw0rd
         attributes:
-          home: /home/aixadmin1
+          home: /home/admin1
       
     # Set virtual network adapter settings
     - name: Virtual network adapter settings
