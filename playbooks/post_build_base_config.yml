@@ -1,0 +1,57 @@
+---
+- name: Playbook to configure a newly built AIX VM
+  hosts: all
+  gather_facts: yes
+  
+  # Defined variables
+  vars:
+   var_timezone: Europe/London
+   var_mnt3_size:  2G
+   var_var_fs_size: 10G 
+   var_min_buf_tiny: 4096
+   var_max_buf_tiny: 4096
+   var_min_buf_small: 4096
+   var_max_buf_small: 4096
+   var_min_buf_medium: 2048
+   var_max_buf_medium: 2048
+   var_min_buf_large: 256
+   var_max_buf_large: 256
+   var_min_buf_huge: 128 
+   var_max_buf_huge: 128
+
+  tasks:
+    # Set timezone
+    - name: Set timezone to Asia/Kolkata
+      timezone:
+       name: "{{ var_timezone }}"
+     
+    # Create filesystems
+    - name: Creation of a JFS2 filesystem
+      ibm.power_aix.filesystem:
+        state: present
+        filesystem: /mnt3
+        fs_type: jfs2
+        attributes: size="{{ var_mnt3_size }}",isnapshot='no'
+        vg: root
+    
+    # Add users
+    - name: Create user aixadmin1
+      user:
+        state: present
+        name: aixadmin1
+        change_passwd_on_login: True
+        password: passw0rd
+        attributes:
+          home: /home/aixadmin1
+      
+    # Set virtual network adapter settings
+    - name: Virtual network adapter settings
+      shell: |
+        lscfg | grep "Virtual I/O Ethernet Adapter" | awk '{print $2}' | while read ent
+        do
+           chdev -l $ent -a min_buf_tiny="{{ var_min_buf_tiny }}" -a max_buf_tiny="{{ var_max_buf_tiny }}" -P 
+           chdev -l $ent -a min_buf_small="{{ var_min_buf_small }}" -a max_buf_small="{{ var_max_buf_small }}" -P
+           chdev -l $ent -a min_buf_medium="{{ var_min_buf_medium }}" -a max_buf_medium="{{ var_max_buf_medium }}" -P
+           chdev -l $ent -a min_buf_large="{{ var_min_buf_large }}" -a max_buf_large="{{ var_max_buf_large }}" -P
+           chdev -l $ent -a min_buf_huge="{{ var_min_buf_huge }}" -a max_buf_huge="{{ var_max_buf_huge }}" -P
+        done     
