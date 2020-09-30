@@ -32,7 +32,7 @@
         filesystem: /mnt3
         fs_type: jfs2
         attributes: size="{{ var_mnt3_fs_size }}"
-        vg: root
+        vg: rootvg
         
     # Resize filesystems
     - name: Resizing /var filesystem.
