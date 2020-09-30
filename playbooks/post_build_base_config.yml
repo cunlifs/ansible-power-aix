@@ -21,7 +21,7 @@
 
   tasks:
     # Set timezone
-    - name: Set timezone to Asia/Kolkata
+    - name: Set timezone to Europe/London
       timezone:
        name: "{{ var_timezone }}"
      
@@ -33,10 +33,18 @@
         fs_type: jfs2
         attributes: size="{{ var_mnt3_size }}",isnapshot='no'
         vg: root
-    
+        
+    # Resize filesystems
+    - name: Resizing /var filesystem.
+      ibm.power_aix.filesystem:
+        filesystem: /var
+        size: "{{ var_var_fs_size }}"
+        state: present
+      ignore_errors: yes
+
     # Add users
     - name: Create user aixadmin1
-      user:
+      ibm.power_aix.user:
         state: present
         name: aixadmin1
         change_passwd_on_login: True
