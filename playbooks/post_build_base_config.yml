@@ -6,7 +6,7 @@
   # Defined variables
   vars:
    var_timezone: Europe/London
-   var_mnt3_size:  2G
+   var_mnt3_fs_size:  2G
    var_var_fs_size: 10G 
    var_min_buf_tiny: 4096
    var_max_buf_tiny: 4096
@@ -31,14 +31,14 @@
         state: present
         filesystem: /mnt3
         fs_type: jfs2
-        attributes: size=3G
+        attributes: size="{{ var_mnt3_fs_size }}"
         vg: root
         
     # Resize filesystems
     - name: Resizing /var filesystem.
       ibm.power_aix.filesystem:
         filesystem: /var
-        size: "{{ var_var_fs_size }}"
+        attributes: size="{{ var_var_fs_size }}"
         state: present
       ignore_errors: yes
 
