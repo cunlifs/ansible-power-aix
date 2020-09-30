@@ -31,7 +31,7 @@
         state: present
         filesystem: /mnt3
         fs_type: jfs2
-        attributes: size="{{ var_mnt3_size }}"
+        attributes: size=3G
         vg: root
         
     # Resize filesystems
