@@ -29,7 +29,7 @@
     - name: Creation of a JFS2 filesystem
       ibm.power_aix.filesystem:
         state: present
-        filesystem: /mnt3
+        filesystem: /new_mnt
         fs_type: jfs2
         attributes: size=2G
         vg: rootvg
